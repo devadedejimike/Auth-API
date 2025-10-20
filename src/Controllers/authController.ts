@@ -11,10 +11,11 @@ export const signUp = async (req: Request, res: Response) => {
         const {username, email, password} = req.body;
 
         // Check if user already exist
-        const existingUser =  await User.findOne(email);
+        const existingUser =  await User.findOne({email});
         if(existingUser){
             return res.status(400).json({message: "User already exist"})
         }
+
         // If user doesnt exist
         const newUser = await User.create({username, email, password});
         const token = jwt.sign({id: newUser._id}, JWT_SECRET, {expiresIn: "7d"});
@@ -29,7 +30,8 @@ export const signUp = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(400).json({
             status: 'fail',
-            message: 'Failed to create a new user', error
+            error: error,
+            message: 'Failed to create a new user'
         })
     }
 }
