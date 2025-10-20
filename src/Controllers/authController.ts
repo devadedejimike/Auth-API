@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from '../Models/userModel';
 
-const JWT_SECRET = process.env.JWT_SECRET || "mysecretkeyforauthapi";
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 
 export const signUp = async (req: Request, res: Response) => {
